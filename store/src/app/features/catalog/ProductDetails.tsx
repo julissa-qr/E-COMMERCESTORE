@@ -24,7 +24,7 @@ export default function ProductDetails(){
 
    return(
     <Typography variant="h2">
-       {product.id}
+       {product.name}
     </Typography>
    )
 }
