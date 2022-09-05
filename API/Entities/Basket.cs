@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Entities
 {
-    [Table("Baskets")]
+   // [Table("Baskets")]
     public class Basket
     {
         public int Id { get; set; }
