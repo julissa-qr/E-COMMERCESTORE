@@ -13,9 +13,10 @@ export default function ProductDetails() {
 
 
    useEffect(() => {
+      //agent.Catalog.details(parseInt(id))
       axios.get(`http://localhost:5000/api/Products/${id}`)
          .then(response => setProduct(response.data))
-         .catch(error => console.log(error))
+         .catch(error => console.log(error.response))
          .finally(() => setLoading(false));
    }, [id])
 

@@ -8,6 +8,7 @@ export default function Catalog() {
 
 
     useEffect(() => {
+        //agent.Catalog.list().then(products => setProducts(products))
         fetch('http://localhost:5000/api/Products')
             .then(response => response.json())
             .then(data => setProducts(data))
