@@ -1,9 +1,11 @@
 using System;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Basket>> GetBasket()
+        public async Task<ActionResult<BasketDto>> GetBasket()
         {
             //the basket wt the items and info
             /*var basket = await _context.Baskets
@@ -34,7 +36,21 @@ namespace API.Controllers
 
             if (basket == null) return NotFound();
 
-            return basket;
+            return new BasketDto
+            {
+                Id = basket.Id,
+                CustomerId = basket.CostumerId,
+                Items = basket.Items.Select(item => new BasketItemDto
+                {
+                    ProductId = item.ProductId,
+                    Name = item.Product.Name,
+                    Price = item.Product.Price,
+                    PictureUrl = item.Product.PictureUrl,
+                    Type = item.Product.Type,
+                    Brand = item.Product.Brand,
+                    Quantity = item.Product.QuantityInStock
+                }).ToList()
+            };
         }
 
 
