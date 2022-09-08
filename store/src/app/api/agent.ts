@@ -47,6 +47,7 @@ const TestErrors = {
     getValidationError: () => requests.get('buggy/validation-error'),
 }
 
+
 const agent = {
     Catalog,
     TestErrors
