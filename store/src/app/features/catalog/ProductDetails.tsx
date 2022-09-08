@@ -2,6 +2,7 @@ import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, T
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import NotFound from "../../errors/NotFound";
 import LoadingComponent from "../../layout/LoadingComponents";
 import { Product } from "../../models/product";
 
@@ -23,8 +24,8 @@ export default function ProductDetails() {
          .finally(() => setLoading(false));
    }, [id])
 
-   if (loading) return <LoadingComponent />
-   if (!product) return <h3>Product not found...</h3>
+   if (loading) return <LoadingComponent message="Loading..."/>
+   if (!product) return <NotFound />
 
    return (
       /*<Typography variant="h2">

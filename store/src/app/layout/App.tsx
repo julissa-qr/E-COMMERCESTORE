@@ -9,6 +9,7 @@ import ContactUs from "../features/contact/ContactUs";
 import HomePage from "../features/home/HomePage";
 import Header from "./Header";
 import 'react-toastify/dist/ReactToastify.css';
+import NotFound from "../errors/NotFound";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/catalog/:id" element={<ProductDetails />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </Container>
     </ThemeProvider>
