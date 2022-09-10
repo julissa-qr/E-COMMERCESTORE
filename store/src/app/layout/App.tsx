@@ -10,6 +10,7 @@ import HomePage from "../features/home/HomePage";
 import Header from "./Header";
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from "../errors/NotFound";
+import BasketPage from "../features/basket/BasketPage";
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/catalog/:id" element={<ProductDetails />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/basket" element={<BasketPage/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </Container>
