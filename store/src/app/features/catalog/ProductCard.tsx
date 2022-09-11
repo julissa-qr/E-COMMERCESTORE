@@ -11,6 +11,7 @@ interface Props {
 
 
 export default function ProductCard({ product }: Props) {
+
     const [loading, setLoading] = useState(false);
 
     function handleAddItem(productId: number) {
