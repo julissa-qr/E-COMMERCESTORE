@@ -1,15 +1,42 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { Toast } from "react-toastify/dist/components";
+import Swal from "sweetalert2";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
-axios.defaults.withCredentials =true;
+axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.response.use(response => {
     return response
-}, (error: AxiosError) => {
-    console.log('caught by interceptor');
+},  (error: AxiosError) => {
+    //console.log('caught by interceptor');
+   
+    const { data, status } = error.response!;
+    switch (status) {
+        case 400:
+            if(data.errors){
+                const modelStateErrors: string[] = [];
+                for(const key in data.errors){
+                    if(data.errors[key]){
+                        modelStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modelStateErrors.flat();
+            }
+            toast.error(data.title);
+            break;
+        case 401:
+            toast.error(data.title);
+            break;
+        case 500:
+            toast.error(data.title);
+            break;
+        default:
+            break;
+    }
     return Promise.reject(error.response);
 })
 
