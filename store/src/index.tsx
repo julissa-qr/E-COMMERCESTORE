@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { StoreProvider } from './app/context/StoreContext';
 import App from './app/layout/App';
 import './app/layout/styles.css'
 import reportWebVitals from './reportWebVitals';
@@ -12,8 +13,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-  <BrowserRouter>
-      <App />
+    <BrowserRouter>
+      <StoreProvider>
+        <App />
+      </StoreProvider>
+
     </BrowserRouter>
   </React.StrictMode>
 );
