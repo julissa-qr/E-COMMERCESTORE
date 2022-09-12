@@ -2,10 +2,15 @@ import { Delete } from "@mui/icons-material";
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import agent from "../../api/agent";
+import { useStoreContext } from "../../context/StoreContext";
 import LoadingComponent from "../../layout/LoadingComponents";
 import { Basket } from "../../models/basket";
 
 export default function BasketPage() {
+    const {basket} = useStoreContext();
+    
+
+/*
     const [loading, setLoading] = useState(true);
     const [basket, setBasket] = useState<Basket | null>(null);
 
@@ -17,7 +22,7 @@ export default function BasketPage() {
     }, [])
 
     if (loading) return <LoadingComponent message='loading basket...' />
-   
+   */
     if (!basket) return <Typography variant="h3">Your basket is empty</Typography>
 
     return (
