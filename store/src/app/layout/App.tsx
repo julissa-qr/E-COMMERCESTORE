@@ -31,6 +31,9 @@ function App() {
         .catch(error => console.log(error)) //catch cualquier error
         .finally(() => setLoading(false)) //
     }
+    else{
+      setLoading(false);
+    }
   }, [setBasket]) //la funcion basket no va a cambiar despues de "set" el loading, va a ser llamado una vez
 
   const [darkMode, setDarkMode] = useState(false);
