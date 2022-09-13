@@ -7,7 +7,7 @@ export default function BasketSummary() {
     // ?? significa que lo que se retiene es null
     //condicional en basket para checar, asegurar que tenemos basket
     const subtotal = basket?.items.reduce((sum,item) => sum + (item.quantity * item.price), 0) ??  0;
-    const deliveryFee = subtotal > 10000 ? 0 : 500;
+    const deliveryFee = subtotal > 20000 ? 0 : 500;
 
     return (
         <>
@@ -28,7 +28,7 @@ export default function BasketSummary() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <span style={{fontStyle: 'italic'}}>*Orders over $100 qualify for free delivery</span>
+                                <span style={{fontStyle: 'italic'}}>*Orders over $200 qualify for free delivery</span>
                             </TableCell>
                         </TableRow>
                     </TableBody>
