@@ -16,6 +16,8 @@ import { getCookie } from "../util/util";
 import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponents";
 import CheckoutPage from "../features/checkout/CheckoutPage";
+import Login from "../features/accounts/Login";
+import Register from "../features/accounts/Register";
 
 function App() {
   //set the basket
@@ -69,6 +71,8 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/basket" element={<BasketPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
