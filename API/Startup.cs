@@ -36,7 +36,12 @@ namespace API
                     opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
                 });
             services.AddCors();
-            services.AddIdentityCore<User>()
+            services.AddIdentityCore<User>(opt =>
+            {
+                //con esto no se tiene emails duplicados en db
+                opt.User.RequireUniqueEmail = true;
+
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
             services.AddAuthentication();
