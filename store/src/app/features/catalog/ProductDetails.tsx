@@ -54,7 +54,7 @@ export default function ProductDetails() {
          //queremos la diferencia entre item.quantity y quantity
          const updatedQuantity = item.quantity - quantity;
          agent.Basket.removeItem(product?.id!, updatedQuantity)
-            .then(() => removeItem(product?.id!, quantity))
+            .then(() => removeItem(product?.id!, updatedQuantity))
             .catch(error => console.log(error))
             .finally(() => setSubmitting(false))
       }
