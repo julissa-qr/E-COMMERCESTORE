@@ -1,6 +1,6 @@
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AboutUs from "../features/about/AboutUs";
 import Catalog from "../features/catalog/Catalog";
@@ -18,8 +18,13 @@ import LoadingComponent from "./LoadingComponents";
 import CheckoutPage from "../features/checkout/CheckoutPage";
 import Login from "../features/accounts/Login";
 import Register from "../features/accounts/Register";
+import { fetchCurrentUser } from "../features/accounts/accountSlice";
+import { useAppDispatch } from "../store/configureStore";
 
 function App() {
+  
+
+  const dispatch = useAppDispatch();
   //set the basket
   const { setBasket } = useStoreContext();
   const [loading, setLoading] = useState(true);
@@ -27,6 +32,8 @@ function App() {
   //to go and get the basket when our plaication loads
   useEffect(() => {
     const customerId = getCookie('customerId'); //debe coincidir en como hemos llamado la cookie
+    dispatch(fetchCurrentUser())
+    
     //si tenemos el customerId
     if (customerId) {
       agent.Basket.get()

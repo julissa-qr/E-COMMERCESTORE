@@ -45,7 +45,7 @@ export const accountSlice = createSlice({
     reducers: {
         signOut: (state) => {
             localStorage.removeItem('user');
-            
+            //falta redireccionar al iniciar sesion
         }
     },
     extraReducers: (builder => {
