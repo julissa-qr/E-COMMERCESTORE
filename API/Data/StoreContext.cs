@@ -19,10 +19,14 @@ namespace API.Data
             base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>()
-            .HasData(
-                new IdentityRole{Name= "Member", NormalizedName = "MEMBER"},
-                new IdentityRole{Name= "Admin", NormalizedName = "ADMIN"}
+            .HasData( //creamos nuevas instancias para los roles
+                new IdentityRole { Name = "Member", NormalizedName = "MEMBER" },
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" }
             );
         }
     }
 }
+
+/*cuando se crea la migracion se tendran comandos SQL para insertarlos en las tablas
+una de las 4 tablas va a ser para los roles
+*/

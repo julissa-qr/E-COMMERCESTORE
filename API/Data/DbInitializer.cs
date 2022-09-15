@@ -10,17 +10,21 @@ namespace API.Data
     {
         public static async Task Initialize(StoreContext context, UserManager<User> userManager)
         {
+            /*vemos si tenemos algun usuario en la base de datos
+            si no, creamos dos usuarios*/
             if (!userManager.Users.Any())
             {
+                //usuario miembro
                 var user = new User
                 {
                     UserName = "juli",
                     Email = "juli@hotmail.com"
                 };
-
+                //usamos await por el metodo async
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "Member");
 
+                //se crea el usuario admin
                 var admin = new User
                 {
                     UserName = "joseadmin",

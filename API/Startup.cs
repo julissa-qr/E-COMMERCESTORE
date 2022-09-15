@@ -66,14 +66,17 @@ namespace API
                     opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
                 });
             services.AddCors();
+            //se agrega un servicio para la Identity
             services.AddIdentityCore<User>(opt =>
             {
                 //con esto no se tiene emails duplicados en db
                 opt.User.RequireUniqueEmail = true;
-
             })
                 .AddRoles<IdentityRole>()
+                /*agrega todas las identity tables,cuando se crea una migracion
+                va a contener, los usuario, roles de usuarios y otras tablas de Identity*/
                 .AddEntityFrameworkStores<StoreContext>();
+            //se agrega authentiaction
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
@@ -89,7 +92,7 @@ namespace API
                 });
 
 
-
+            //se agrega la autorizacion
             services.AddAuthorization();
             services.AddScoped<TokenService>();
         }

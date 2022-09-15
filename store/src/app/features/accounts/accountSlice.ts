@@ -48,6 +48,7 @@ export const accountSlice = createSlice({
             //falta redireccionar al iniciar sesion
         }
     },
+    
     extraReducers: (builder => {
         builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
             state.user = action.payload;
