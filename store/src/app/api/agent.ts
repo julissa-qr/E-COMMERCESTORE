@@ -9,39 +9,39 @@ axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-axios.interceptors.request.use( config => {
+axios.interceptors.request.use(config => {
     const token = store.getState().account.user?.token;
-   config.headers = {
+    config.headers = {
         Authorization: `Bearer ${token}`,
-   } 
+    }
     return config;
-},(error) =>{
+}, (error) => {
     return Promise.reject(error);
 });
 
 // Request interceptor for API calls
-axios.interceptors.request.use( async config => {
-      const value = await store.getState().account.user?.token;
-      //const keys = JSON.parse(value)
-      config.headers = { 
-       // 'Authorization': `Bearer ${user?.token}`,
+axios.interceptors.request.use(async config => {
+    const value = await store.getState().account.user?.token;
+    //const keys = JSON.parse(value)
+    config.headers = {
+        // 'Authorization': `Bearer ${user?.token}`,
         'Accept': 'application/json',
-      }
-      return config;
-    })
+    }
+    return config;
+})
 
 axios.interceptors.response.use(response => {
     return response
-},  (error: AxiosError) => {
+}, (error: AxiosError) => {
     //console.log('caught by interceptor');
-   
+
     const { data, status } = error.response!;
     switch (status) {
         case 400:
-            if(data.errors){
+            if (data.errors) {
                 const modelStateErrors: string[] = [];
-                for(const key in data.errors){
-                    if(data.errors[key]){
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
                         modelStateErrors.push(data.errors[key])
                     }
                 }
@@ -50,7 +50,7 @@ axios.interceptors.response.use(response => {
             toast.error(data.title);
             break;
         case 401:
-            toast.error(data.title || 'Unauthorised');
+            toast.error((data.title) || ('401 - Unauthorised'));
             break;
         case 500:
             toast.error(data.title);

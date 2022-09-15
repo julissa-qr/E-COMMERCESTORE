@@ -33,7 +33,6 @@ function App() {
   useEffect(() => {
     const customerId = getCookie('customerId'); //debe coincidir en como hemos llamado la cookie
     dispatch(fetchCurrentUser());
-    
     //si tenemos el customerId
     if (customerId) {
       agent.Basket.get()
