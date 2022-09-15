@@ -9,11 +9,15 @@ axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-/*axios.interceptors.request.use( config => {
+axios.interceptors.request.use( config => {
     const token = store.getState().account.user?.token;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+   config.headers = {
+        Authorization: `Bearer ${token}`,
+   } 
     return config;
-})*/
+},(error) =>{
+    return Promise.reject(error);
+});
 
 // Request interceptor for API calls
 axios.interceptors.request.use( async config => {
