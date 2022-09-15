@@ -29,7 +29,6 @@ export const fetchCurrentUser = createAsyncThunk<User>(
     'account/signInUser',
     async (_, thunkAPI) => {
         try {
-
             const user = await agent.Account.currentUser();
             localStorage.setItem('user', JSON.stringify(user));
             return user;
@@ -44,8 +43,8 @@ export const accountSlice = createSlice({
     initialState,
     reducers: {
         signOut: (state) => {
+            state.user = null;
             localStorage.removeItem('user');
-            //falta redireccionar al iniciar sesion
         }
     },
     

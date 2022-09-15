@@ -74,6 +74,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                             <ShoppingCart />
                         </Badge>
                     </IconButton>
+                    
                     {user ? (
                         <SignedInMenu />
                     ) : (
