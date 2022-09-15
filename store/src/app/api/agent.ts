@@ -1,11 +1,30 @@
+import { Token } from "@mui/icons-material";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
+import { store } from "../store/configureStore";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
+
+/*axios.interceptors.request.use( config => {
+    const token = store.getState().account.user?.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})*/
+
+// Request interceptor for API calls
+axios.interceptors.request.use( async config => {
+      const value = await store.getState().account.user?.token;
+      //const keys = JSON.parse(value)
+      config.headers = { 
+       // 'Authorization': `Bearer ${user?.token}`,
+        'Accept': 'application/json',
+      }
+      return config;
+    })
 
 axios.interceptors.response.use(response => {
     return response
@@ -27,7 +46,7 @@ axios.interceptors.response.use(response => {
             toast.error(data.title);
             break;
         case 401:
-            toast.error(data.title);
+            toast.error(data.title || 'Unauthorised');
             break;
         case 500:
             toast.error(data.title);

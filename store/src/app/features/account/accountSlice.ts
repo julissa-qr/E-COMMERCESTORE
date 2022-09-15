@@ -26,8 +26,9 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
 )
 
 export const fetchCurrentUser = createAsyncThunk<User>(
-    'account/signInUser',
+    'account/fetchCurrentUser',
     async (_, thunkAPI) => {
+        thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem('user')!)));
         try {
             const user = await agent.Account.currentUser();
             localStorage.setItem('user', JSON.stringify(user));
@@ -35,7 +36,14 @@ export const fetchCurrentUser = createAsyncThunk<User>(
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.data });
         }
+    },
+
+    {
+        condition: () => {
+            if (!localStorage.getItem('user')) return false;
+        }
     }
+
 )
 
 export const accountSlice = createSlice({
@@ -45,6 +53,10 @@ export const accountSlice = createSlice({
         signOut: (state) => {
             state.user = null;
             localStorage.removeItem('user');
+        },
+        setUser: (state, action) => {
+            state.user = action.payload;
+
         }
     },
     
@@ -58,4 +70,4 @@ export const accountSlice = createSlice({
     })
 })
 
-export const {signOut} = accountSlice.actions;
+export const {signOut, setUser} = accountSlice.actions;

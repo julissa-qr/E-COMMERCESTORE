@@ -32,7 +32,7 @@ function App() {
   //to go and get the basket when our plaication loads
   useEffect(() => {
     const customerId = getCookie('customerId'); //debe coincidir en como hemos llamado la cookie
-    dispatch(fetchCurrentUser())
+    dispatch(fetchCurrentUser());
     
     //si tenemos el customerId
     if (customerId) {
