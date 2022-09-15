@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -35,9 +34,9 @@ namespace API.Services
             foreach (var role in roles)
             {
                 //creara un array de las claims y se vera cada rol
-                 claims.Add(new Claim(ClaimTypes.Role, role));   
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
+            //key es usada para 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTSettings:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 

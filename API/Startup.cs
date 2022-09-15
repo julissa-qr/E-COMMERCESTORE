@@ -83,17 +83,18 @@ namespace API
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
+                        ValidateAudience = false, //audiencia
+                        ValidateLifetime = true, //tiempo de vida
+                        ValidateIssuerSigningKey = true, //checamos la secret key
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                                         .GetBytes(Configuration["JWTSettings:TokenKey"]))
                     };
                 });
 
-
             //se agrega la autorizacion
             services.AddAuthorization();
+            /**/
+
             services.AddScoped<TokenService>();
         }
 
