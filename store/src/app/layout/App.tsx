@@ -16,9 +16,9 @@ import { getCookie } from "../util/util";
 import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponents";
 import CheckoutPage from "../features/checkout/CheckoutPage";
-import Login from "../features/accounts/Login";
-import Register from "../features/accounts/Register";
-import { fetchCurrentUser } from "../features/accounts/accountSlice";
+import Login from "../features/account/Login";
+import Register from "../features/account/Register";
+import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
 
 function App() {

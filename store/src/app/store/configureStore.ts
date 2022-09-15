@@ -1,7 +1,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { accountSlice } from "../features/accounts/accountSlice";
+import { accountSlice } from "../features/account/accountSlice";
 import { counterSlice } from "../features/contact/counterSlice";
 
 /*export function configureStore(){

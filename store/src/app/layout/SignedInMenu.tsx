@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useNavigate, useNavigation } from "react-router";
-import { signOut } from "../features/accounts/accountSlice";
+import { signOut } from "../features/account/accountSlice";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
 
 export default function SignedInMenu() {

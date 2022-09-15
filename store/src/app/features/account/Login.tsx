@@ -6,8 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
-import { Link, useNavigate} from 'react-router-dom';
-import agent from '../../api/agent';
+import { Link, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../store/configureStore';
@@ -25,10 +24,13 @@ export default function Login() {
   })
 
   async function submitForm(data: FieldValues) {
-     
-      await dispatch(signInUser(data));
-      navigate('/catalog');
-    
+    try{
+    await dispatch(signInUser(data));
+  }catch(error:any){
+    console.log(error);
+  } 
+    //navigate('/catalog');
+
   }
 
   return (
@@ -47,18 +49,21 @@ export default function Login() {
           fullWidth
           label="Username"
           autoFocus
-          {...register('username', { required: 'Username required' })}
-          //error={!!errors.username}
-          //helperText={errors?.username?.message}
+          {...register('username', { required: 'Username is required' })}
+        error={!!errors.username}
+        required
+        //helperText="* is required"
+        //helperText={errors?.username?.message}
         />
         <TextField
           margin="normal"
           fullWidth
           label="Password"
           type="password"
-          {...register('password', { required: 'Password required' })}
-          //error={!!errors.password}
-          //helperText={errors?.password?.message}
+          {...register('password', { required: 'Password is required' })}
+          error={!!errors.password}
+          required
+        //helperText={errors?.password?.message}
         />
         <LoadingButton
           loading={isSubmitting}
