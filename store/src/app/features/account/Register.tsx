@@ -5,19 +5,21 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Paper } from '@mui/material';
+import { Alert, AlertTitle, List, ListItem, ListItemText, Paper } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../store/configureStore';
 import agent from '../../api/agent';
+import { useState } from 'react';
+import { error } from 'console';
 
 
 export default function Register() {
 
     //let navigate = useNavigate();
     const dispatch = useAppDispatch();
-
+    const [validationErrors, setValidationErrors] = useState([]);
     const { register, handleSubmit, formState: { isSubmitting, errors, isValid } } = useForm({
         mode: 'all'
     })
@@ -33,7 +35,9 @@ export default function Register() {
                 Register
             </Typography>
             <Box component="form"
-                onSubmit={handleSubmit((data) => agent.Account.register(data))} noValidate sx={{ mt: 1 }}>
+                onSubmit={handleSubmit((data) =>
+                    agent.Account.register(data).catch(error => setValidationErrors(error)))
+                } noValidate sx={{ mt: 1 }}>
                 <TextField
                     margin="normal"
                     fullWidth
@@ -63,6 +67,18 @@ export default function Register() {
                     required
                 //helperText={errors?.password?.message}
                 />
+                {validationErrors.length > 0 &&
+                    <Alert severity="error">
+                        <AlertTitle>Validation Errors</AlertTitle>
+                        <List>
+                            {validationErrors.map(error => (
+                                <ListItem key={error}>
+                                    <ListItemText>{error}</ListItemText>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Alert>
+                }
                 <LoadingButton
                     loading={isSubmitting}
                     disabled={!isValid}
@@ -81,6 +97,8 @@ export default function Register() {
                     </Grid>
                 </Grid>
             </Box>
+
+
         </Container>
 
     );

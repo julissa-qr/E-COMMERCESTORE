@@ -34,7 +34,6 @@ export default function AboutUs() {
                     </List>
                 </Alert>
             
-            
             }
         </Container>
     )
