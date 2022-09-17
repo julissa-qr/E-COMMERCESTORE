@@ -31,7 +31,7 @@ namespace API.Controllers
                 .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(x => x.CostumerId == Request.Cookies["customerId"]);
         */
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetCustomerId());
 
             if (basket == null) return NotFound();
             return MapBasketToDto(basket);
@@ -43,7 +43,7 @@ namespace API.Controllers
         public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)
         {
             //get basket
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetCustomerId());
             if (basket == null) basket = CreateBasket();
 
             //get product related to the item
@@ -66,7 +66,7 @@ namespace API.Controllers
         public async Task<ActionResult> DeleteBasketItem(int productId, int quantity)
         {
             //get basket
-            var basket = await RetrieveBasket();
+            var basket = await RetrieveBasket(GetCustomerId());
             if (basket == null) return NotFound();
 
             // remove item or reduce quantity
@@ -79,12 +79,22 @@ namespace API.Controllers
             return BadRequest(new ProblemDetails { Title = "Problem removing item from basket" });
         }
 
-        private async Task<Basket> RetrieveBasket()
+        private async Task<Basket> RetrieveBasket(string customerId)
         {
+
+            if (string.IsNullOrEmpty(customerId)){
+                Response.Cookies.Delete("customerId");
+                return null;
+            }
+
             return await _context.Baskets
                  .Include(i => i.Items)
                  .ThenInclude(p => p.Product)
-                 .FirstOrDefaultAsync(x => x.CostumerId == Request.Cookies["customerId"]);
+                 .FirstOrDefaultAsync(x => x.CostumerId == customerId);
+        }
+
+        private string GetCustomerId(){
+            return User.Identity?.Name ?? Request.Cookies["customerId"];
         }
 
         private Basket CreateBasket()
