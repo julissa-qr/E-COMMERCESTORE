@@ -15,7 +15,7 @@ export function useStoreContext() {
     const context = useContext(StoreContext);
 
     if (context === undefined) {
-        throw Error('oops - we do not seem to be inside the provider')
+        throw Error('oops')
     }
     return context;
 }
