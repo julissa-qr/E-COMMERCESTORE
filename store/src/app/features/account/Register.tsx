@@ -5,35 +5,35 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Paper } from '@mui/material';
+import { FormHelperText, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
-import { useAppDispatch } from '../../store/configureStore';
 import agent from '../../api/agent';
 
 
 export default function Register() {
 
     //let navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    /*const [validationErrors, setValidationErrors] = useState([]);*/
     const { register, handleSubmit, setError, formState: { isSubmitting, errors, isValid } } = useForm({
         mode: 'all'
     })
 
-    function handleApiErrors(errors: any){
+    function handleApiErrors(errors: any) {
         //console.log(errors);
-        if(errors) {
-            errors.forEach((error: string) => {
+        if (errors){
+            errors.forEach((error : string) => {
                 if(error.includes('Password')){
                     setError('password', {message: error})
                 }else if (error.includes('Email')){
                     setError('email', {message: error})
                 }else if (error.includes('Username')){
-                    setError('username', {message:error})
+                    setError('username', {message: error})
                 }
             });
         }
+            
     }
 
     return (
@@ -58,18 +58,17 @@ export default function Register() {
                     {...register('username', { required: 'Username is required' })}
                     error={!!errors.username}
                     required
-                   // required
-                   //helperText={errors?.username?.message}
-                   //helperText={errors.username ? errors.message : ''}
+                    helperText={!errors.username?.message ? ' ' : `${errors.username.message}`}
                 />
 
                 <TextField
                     margin="normal"
                     fullWidth
-                    label="Email"
+                    label="Email address"
                     {...register('email', { required: 'Email is required' })}
                     error={!!errors.email}
                     required
+                    helperText={!errors.email?.message ? ' ' : `${errors.email.message}`}
                 />
 
                 <TextField
@@ -80,9 +79,22 @@ export default function Register() {
                     {...register('password', { required: 'Password is required' })}
                     error={!!errors.password}
                     required
+                    helperText={!errors.password?.message ? ' ' : `${errors.password.message}`}
                 //helperText={errors?.password?.message}
                 />
-        
+                {/*{validationErrors.length > 0 &&
+                    <Alert severity="error">
+                        <AlertTitle>Validation Errors</AlertTitle>
+                        <List>
+                            {validationErrors.map(error => (
+                                <ListItem key={error}>
+                                    <ListItemText>{error}</ListItemText>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Alert>
+
+                }*/}
                 <LoadingButton
                     loading={isSubmitting}
                     disabled={!isValid}
