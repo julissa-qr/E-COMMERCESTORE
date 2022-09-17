@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -26,19 +25,11 @@ namespace API.Controllers
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
-            //the basket wt the items and info
-            /*var basket = await _context.Baskets
-                .Include(i => i.Items)
-                .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(x => x.CostumerId == Request.Cookies["customerId"]);
-        */
             var basket = await RetrieveBasket(GetCustomerId());
 
             if (basket == null) return NotFound();
             return basket.MapBasketToDto();
         }
-
-
 
         [HttpPost]//     api/basket?productId=2quantity=3
         public async Task<ActionResult<BasketDto>> AddItemToBasket(int productId, int quantity)

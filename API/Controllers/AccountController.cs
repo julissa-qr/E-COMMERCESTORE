@@ -43,14 +43,13 @@ namespace API.Controllers
 
             /* si ya hay un a orden en el servidor y ellos tienen
             una orden anonima, se elimina la orden de usuario y cambia el nombre del customerId
-            y de la orden anonima al usermane*/
+            y de la orden anonima al username*/
             if (anonBasket != null)
             {
                 if (userBasket != null) _context.Baskets.Remove(userBasket);
                 anonBasket.CostumerId = user.UserName; //se transfiere la orden anonima al usuario
                 Response.Cookies.Delete("customerId");
                 await _context.SaveChangesAsync();
-
 
             }
 
