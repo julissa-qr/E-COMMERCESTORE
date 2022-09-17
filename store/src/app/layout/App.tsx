@@ -20,13 +20,15 @@ import Login from "../features/account/Login";
 import Register from "../features/account/Register";
 import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
+import { setBasket } from "../features/basket/basketSlice";
 
 function App() {
   
 
   const dispatch = useAppDispatch();
   //set the basket
-  const { setBasket } = useStoreContext();
+  //esto tenia antes
+  //const { setBasket } = useStoreContext();
   const [loading, setLoading] = useState(true);
 
   //to go and get the basket when our plaication loads
@@ -36,7 +38,7 @@ function App() {
     //si tenemos el customerId
     if (customerId) {
       agent.Basket.get()
-        .then(basket => setBasket(basket))//podemos usar nuestro metodo setBasket desde nuestro context
+        .then(basket => dispatch(setBasket(basket)))//podemos usar nuestro metodo setBasket desde nuestro context
         .catch(error => console.log(error)) //catch cualquier error
         .finally(() => setLoading(false)) //
     }

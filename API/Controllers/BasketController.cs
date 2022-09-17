@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace API.Controllers
             var basket = await RetrieveBasket(GetCustomerId());
 
             if (basket == null) return NotFound();
-            return MapBasketToDto(basket);
+            return basket.MapBasketToDto();
         }
 
 
@@ -56,7 +57,7 @@ namespace API.Controllers
             //save changes
             var result = await _context.SaveChangesAsync() > 0;
 
-            if (result) return CreatedAtRoute("GetBasket", MapBasketToDto(basket));
+            if (result) return CreatedAtRoute("GetBasket", basket.MapBasketToDto());
 
             return BadRequest(new ProblemDetails { Title = "Problem saving item to basket" });
         }
@@ -82,7 +83,8 @@ namespace API.Controllers
         private async Task<Basket> RetrieveBasket(string customerId)
         {
 
-            if (string.IsNullOrEmpty(customerId)){
+            if (string.IsNullOrEmpty(customerId))
+            {
                 Response.Cookies.Delete("customerId");
                 return null;
             }
@@ -93,37 +95,25 @@ namespace API.Controllers
                  .FirstOrDefaultAsync(x => x.CostumerId == customerId);
         }
 
-        private string GetCustomerId(){
+        private string GetCustomerId()
+        {
             return User.Identity?.Name ?? Request.Cookies["customerId"];
         }
 
+        //cuando se crea la orden, vamos a darle el customerId a su usuario
         private Basket CreateBasket()
         {
-            var customerId = Guid.NewGuid().ToString();
-            var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
-            Response.Cookies.Append("customerId", customerId, cookieOptions);
+            var customerId = User.Identity?.Name;
+            if (string.IsNullOrEmpty(customerId))
+            {
+                //y si no estarian usando ordenes anonimas
+                customerId = Guid.NewGuid().ToString();
+                var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
+                Response.Cookies.Append("customerId", customerId, cookieOptions);
+            }
             var basket = new Basket { CostumerId = customerId };
             _context.Baskets.Add(basket);
             return basket;
-        }
-
-        private BasketDto MapBasketToDto(Basket basket)
-        {
-            return new BasketDto
-            {
-                Id = basket.Id,
-                CustomerId = basket.CostumerId,
-                Items = basket.Items.Select(item => new BasketItemDto
-                {
-                    ProductId = item.ProductId,
-                    Name = item.Product.Name,
-                    Price = item.Product.Price,
-                    PictureUrl = item.Product.PictureUrl,
-                    Type = item.Product.Type,
-                    Brand = item.Product.Brand,
-                    Quantity = item.Quantity
-                }).ToList()
-            };
         }
     }
 }

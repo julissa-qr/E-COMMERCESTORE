@@ -35,7 +35,8 @@ const navStyles = {
 }
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
-    const { basket } = useStoreContext();
+    //const { basket } = useStoreContext();
+    const { basket } = useAppSelector(state => state.basket);
 
     const { user } = useAppSelector(state => state.account);
     //reduce un array de items que tiene el valor de la cantidad, se reduce a un solo numero
