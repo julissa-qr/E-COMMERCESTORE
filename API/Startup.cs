@@ -72,7 +72,7 @@ namespace API
                 //con esto no se tiene emails duplicados en db
                 opt.User.RequireUniqueEmail = true;
             })
-                .AddRoles<IdentityRole>()
+                .AddRoles<Role>()
                 /*agrega todas las identity tables,cuando se crea una migracion
                 va a contener, los usuario, roles de usuarios y otras tablas de Identity*/
                 .AddEntityFrameworkStores<StoreContext>();
