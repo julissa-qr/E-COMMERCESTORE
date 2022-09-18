@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import CheckoutPage from "../features/checkout/CheckoutPage";
 import { useAppSelector } from "../store/configureStore";
 

@@ -2,12 +2,13 @@ import { Add, Delete, Remove } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import agent from "../../api/agent";
 import { useStoreContext } from "../../context/StoreContext";
 import BasketSummary from "./BasketSummary";
 
 export default function BasketPage() {
+  
   const { basket, setBasket, removeItem } = useStoreContext();
   const [status, setStatus] = useState({
     loading: false,
@@ -29,19 +30,7 @@ export default function BasketPage() {
       .catch(error => console.log(error))
       .finally(() => setStatus({ loading: true, name: '' }))
   }
-  /*
-      const [loading, setLoading] = useState(true);
-      const [basket, setBasket] = useState<Basket | null>(null);
   
-      useEffect(() => {
-          agent.Basket.get()
-              .then(basket => setBasket(basket))
-              .catch(error => console.log(error))
-              .finally(() => setLoading(false))
-      }, [])
-  
-      if (loading) return <LoadingComponent message='loading basket...' />
-     */
   if (!basket) return <Typography variant="h3">Your basket is empty</Typography>
 
   return (
