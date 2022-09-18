@@ -6,7 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../store/configureStore';
@@ -16,6 +16,7 @@ import { signInUser } from './accountSlice';
 export default function Login() {
 
   let navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   const { register, handleSubmit, formState: { isSubmitting, errors, isValid } } = useForm({
@@ -32,9 +33,9 @@ export default function Login() {
   }
 
   return (
-
+    
     <Container component={Paper} maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-
+      <Outlet/>
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
       </Avatar>

@@ -20,6 +20,7 @@ import Login from "../features/account/Login";
 import Register from "../features/account/Register";
 import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   
@@ -76,9 +77,13 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/basket" element={<BasketPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          <Route element={<PrivateRoute />}>
+          <Route path="/checkout" element={<CheckoutPage />} />
+          </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
