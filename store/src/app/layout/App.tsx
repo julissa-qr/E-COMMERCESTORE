@@ -80,7 +80,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route element={<PrivateRoute />}>
+          <Route element={<PrivateRoute />} >
           <Route path="/checkout" element={<CheckoutPage />} />
           </Route>
           

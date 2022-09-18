@@ -1,17 +1,19 @@
-import { Outlet } from "react-router";
-import Login from "../features/account/Login";
+import { Navigate } from "react-router";
+import CheckoutPage from "../features/checkout/CheckoutPage";
+import { useAppSelector } from "../store/configureStore";
 
 const useAuth = () => {
-    const user = {loggedIn: false};
-    return user && user.loggedIn;
+    //const user = {loggedIn: false};
+    //return user && user.loggedIn;
+    const {user} = useAppSelector(state => state.account);
+    
 }
-
 
 const PrivateRoute = () =>{
-    const isAuth = useAuth();
-    return isAuth ? <Outlet /> : <Login />
+    //const isAuth = useAuth();
+    const {user} = useAppSelector(state => state.account);
+    return user ? <CheckoutPage /> : <Navigate to="/login" />
 }
-
 
 export default PrivateRoute;
 
