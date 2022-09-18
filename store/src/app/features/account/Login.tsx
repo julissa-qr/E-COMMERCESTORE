@@ -23,10 +23,12 @@ export default function Login() {
   })
 
   async function submitForm(data: FieldValues) {
-   
-    await dispatch(signInUser(data));
-    navigate('/catalog');
-
+    try {
+      await dispatch(signInUser(data));
+      navigate('/catalog');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -46,9 +48,9 @@ export default function Login() {
           label="Username"
           autoFocus
           {...register('username', { required: 'Username is required' })}
-        error={!!errors.username}
-        required
-        helperText={!errors.username?.message ? ' ' : `${errors.username.message}`}
+          error={!!errors.username}
+          required
+          helperText={!errors.username?.message ? ' ' : `${errors.username.message}`}
         />
         <TextField
           margin="normal"

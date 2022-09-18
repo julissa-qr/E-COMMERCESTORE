@@ -19,8 +19,8 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
     async (data, thunkAPI) => {
         try {
             const userDto = await agent.Account.login(data);
-            const {basket, ...user} = userDto;
-            if(basket) thunkAPI.dispatch(setBasket(basket));
+            const { basket, ...user } = userDto;
+            if (basket) thunkAPI.dispatch(setBasket(basket));
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         } catch (error: any) {
@@ -35,8 +35,8 @@ export const fetchCurrentUser = createAsyncThunk<User>(
         thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem('user')!)));
         try {
             const userDto = await agent.Account.currentUser();
-            const {basket, ...user} = userDto;
-            if(basket) thunkAPI.dispatch(setBasket(basket));
+            const { basket, ...user } = userDto;
+            if (basket) thunkAPI.dispatch(setBasket(basket));
             localStorage.setItem('user', JSON.stringify(user));
             return user;
         } catch (error: any) {
@@ -72,7 +72,7 @@ export const accountSlice = createSlice({
             //const navigate = useNavigate();
             toast.error('Session expired - please login again');
             //navigateLogin();
-            
+
         })
 
         builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
