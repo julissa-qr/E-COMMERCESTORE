@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Basket } from "../../models/basket";
 
 interface BasketState {
-    basket: Basket | null
+    basket: Basket | null;
 }
 
 const initialState: BasketState = {
     basket: null
 }
+
+
 
 export const basketSlice = createSlice({
     name: 'basket',

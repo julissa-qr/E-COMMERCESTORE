@@ -24,7 +24,6 @@ namespace API.Controllers
             _context = context;
             _tokenService = tokenService;
             _userManager = userManager;
-
         }
 
         //LOGIN
@@ -50,16 +49,14 @@ namespace API.Controllers
                 anonBasket.CostumerId = user.UserName; //se transfiere la orden anonima al usuario
                 Response.Cookies.Delete("customerId");
                 await _context.SaveChangesAsync();
-
             }
-
             //regresa el usuario porque han iniciado sesion satisfactoriamente
             return new UserDto
             {
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
                 //si tenemos la orden y no tenemos ordenes anonimas, regresa la orden de usuario
-                Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket.MapBasketToDto()
+                Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket?.MapBasketToDto()
             };
         }
 
@@ -91,11 +88,13 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var userBasket = await RetrieveBasket(User.Identity.Name);
 
             return new UserDto
             {
                 Email = user.Email,
-                Token = await _tokenService.GenerateToken(user)
+                Token = await _tokenService.GenerateToken(user),
+                Basket = userBasket?.MapBasketToDto()
             };
         }
 

@@ -1,4 +1,3 @@
-import { Token } from "@mui/icons-material";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { store } from "../store/configureStore";
