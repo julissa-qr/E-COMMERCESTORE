@@ -20,16 +20,16 @@ export const basketSlice = createSlice({
         },
         clearBasket: (state) => {
             state.basket = null;
-        }
+        },
         
-        /*removeItem: (state, action) => {
+        removeItem: (state, action) => {
             const { productId, quantity } = action.payload;
             const itemIndex = state.basket?.items.findIndex(i => i.productId === productId)
             if (itemIndex === -1 || itemIndex === undefined) return;
             state.basket!.items[itemIndex].quantity -= quantity;
             if (state.basket?.items[itemIndex].quantity === 0)
                 state.basket?.items.splice(itemIndex, 1);
-        }*/
+        }
     }
 })
 
