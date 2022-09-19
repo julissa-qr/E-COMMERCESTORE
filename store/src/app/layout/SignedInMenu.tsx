@@ -41,6 +41,7 @@ export default function SignedInMenu() {
                     dispatch(signOut());
                     dispatch(clearBasket());
                     navigate("/");
+                    //window.location.reload();
                 }}>Logout</MenuItem>
             </Menu>
         </>

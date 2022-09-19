@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { store } from "../store/configureStore";
 
 
@@ -34,6 +35,20 @@ axios.interceptors.response.use(response => {
 }, (error: AxiosError) => {
     //console.log('caught by interceptor');
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-right',
+        iconColor: 'red',
+        background: '#f27474',
+        customClass: {
+          popup: 'colored-toast'
+        },
+        
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+      })
+
     const { data, status } = error.response!;
     switch (status) {
         case 400:
@@ -47,12 +62,24 @@ axios.interceptors.response.use(response => {
                 throw modelStateErrors.flat();
             }
             toast.error(data.title);
+            Toast.fire({
+                icon: 'error',
+                title:'400 -Bad request'
+            })
             break;
         case 401:
-            toast.error((data.title) || ('401 - Unauthorised'));
+            //toast.error((data.title) || ('401 - Unauthorized'));
+            Toast.fire({
+                icon: 'error',
+                title:'401 - Unauthorized'
+            })
             break;
         case 500:
             toast.error(data.title);
+            Toast.fire({
+                icon: 'error',
+                title:'500 - Internal server error'
+            })
             break;
         default:
             break;

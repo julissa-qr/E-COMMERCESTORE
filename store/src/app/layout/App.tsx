@@ -23,11 +23,11 @@ import { useAppDispatch } from "../store/configureStore";
 import PrivateRoute from "./PrivateRoute";
 
 function App() {
-  
 
   const dispatch = useAppDispatch();
   //set the basket
   const { setBasket } = useStoreContext();
+  
   const [loading, setLoading] = useState(true);
 
   //to go and get the basket when our plaication loads
@@ -44,7 +44,7 @@ function App() {
     else{
       setLoading(false);
     }
-  }, [setBasket]) //la funcion basket no va a cambiar despues de "set" el loading, va a ser llamado una vez
+  }, [setBasket, dispatch]) //la funcion basket no va a cambiar despues de "set" el loading, va a ser llamado una vez
 
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? 'dark' : 'light';

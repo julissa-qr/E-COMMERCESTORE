@@ -25,18 +25,8 @@ export default function ProductCard({ product }: Props) {
             .finally(() => setLoading(false));
     }
 
-
-
     return (
-        /*   <ListItem key={product.id}>
-               <ListItemAvatar>
-                   <Avatar src={product.pictureUrl} />
-               </ListItemAvatar>
-               <ListItemText>
-                   {product.name} - {product.price}
-               </ListItemText>
-           </ListItem>*/
-
+       
         <Card>
             <CardHeader
                 avatar={

@@ -56,7 +56,6 @@ export default function CheckoutPage() {
                 setLoading(false);
             }
         } else {
-
             setActiveStep(activeStep + 1);
         }
     };
