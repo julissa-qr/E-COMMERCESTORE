@@ -1,7 +1,7 @@
 import { createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { FieldValues } from "react-hook-form";
-import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { User } from "../../models/user";
 import { setBasket } from "../basket/basketSlice";
@@ -13,8 +13,6 @@ interface AccountState {
 const initialState: AccountState = {
     user: null
 }
-
-
 
 export const signInUser = createAsyncThunk<User, FieldValues>(
     'account/signInUser',
@@ -55,9 +53,7 @@ export const fetchCurrentUser = createAsyncThunk<User>(
 
 )
 
-
 export const accountSlice = createSlice({
-    
     name: 'account',
     initialState,
     reducers: {
@@ -73,18 +69,16 @@ export const accountSlice = createSlice({
         builder.addCase(fetchCurrentUser.rejected, (state) => {
             state.user = null;
             localStorage.removeItem('user');
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops',
-                text: 'Session expired - please login again'
-            })
-           //falta redireccionar al login
+            //const navigate = useNavigate();
+            toast.error('Session expired - please login again');
+            //navigateLogin();
+
         })
 
         builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
             state.user = action.payload;
         });
-        builder.addMatcher(isAnyOf(signInUser.rejected, fetchCurrentUser.rejected), (state, action) => {
+        builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
             console.log(action.payload);
         })
     })

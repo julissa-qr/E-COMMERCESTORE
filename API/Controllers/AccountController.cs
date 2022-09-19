@@ -36,7 +36,7 @@ namespace API.Controllers
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
 
-            //obtener las ordenes de los usuarios si la tenemos
+            //obtener las ordenes de los usuarios
             var userBasket = await RetrieveBasket(loginDto.Username);
             var anonBasket = await RetrieveBasket(Request.Cookies["customerId"]);
 
@@ -56,7 +56,7 @@ namespace API.Controllers
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
                 //si tenemos la orden y no tenemos ordenes anonimas, regresa la orden de usuario
-                Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket.MapBasketToDto()
+                Basket = anonBasket != null ? anonBasket.MapBasketToDto() : userBasket?.MapBasketToDto()
             };
         }
 

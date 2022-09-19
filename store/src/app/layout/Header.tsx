@@ -36,7 +36,7 @@ const navStyles = {
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
     const { basket } = useStoreContext();
-    //const {basket} = useAppSelector(state => state.basket);
+
     const { user } = useAppSelector(state => state.account);
     //reduce un array de items que tiene el valor de la cantidad, se reduce a un solo numero
     const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0) //ejecuta una funcion callback para cada item en el array
