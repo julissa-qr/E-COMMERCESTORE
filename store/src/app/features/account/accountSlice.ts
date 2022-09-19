@@ -2,6 +2,7 @@ import { createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import agent from "../../api/agent";
 import { User } from "../../models/user";
 import { setBasket } from "../basket/basketSlice";
@@ -70,8 +71,13 @@ export const accountSlice = createSlice({
             state.user = null;
             localStorage.removeItem('user');
             //const navigate = useNavigate();
-            toast.error('Session expired - please login again');
+            //toast.error('Session expired - please login again');
             //navigateLogin();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops',
+                text: 'Session expired - please login again'
+            })
 
         })
 
