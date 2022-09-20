@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import Orders from "../features/orders/Order";
+import Orders from "../features/orders/Orders";
 import { useAppSelector } from "../store/configureStore";
 
 

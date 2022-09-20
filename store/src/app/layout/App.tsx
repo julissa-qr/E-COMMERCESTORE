@@ -21,7 +21,7 @@ import Register from "../features/account/Register";
 import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
 import PrivateRoute from "./PrivateRoute";
-import Orders from "../features/orders/Order";
+import Orders from "../features/orders/Orders";
 import PrivateRouteOrder from "./PrivateRouteOrder";
 
 function App() {
