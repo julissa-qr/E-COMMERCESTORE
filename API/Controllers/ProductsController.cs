@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +16,11 @@ namespace API.Controllers
     public class ProductsController : BaseApiController
     {
         private readonly StoreContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductsController(StoreContext context)
+        public ProductsController(StoreContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
 
         }
@@ -34,7 +39,7 @@ namespace API.Controllers
         }
 
         //GET A SPECIFIC PRODUCT
-        [HttpGet("{id}")] //api/products/3
+        [HttpGet("{id}", Name = "GetProduct")] //api/products/3
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -42,6 +47,20 @@ namespace API.Controllers
             return product;
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
+        {
+            var product = _mapper.Map<Product>(productDto);
+
+            _context.Products.Add(product);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if(result) return CreatedAtRoute("GetProduct", new {Id = product.Id}, product);
+            return BadRequest(new ProblemDetails {Title= "Problem creating new Product"});
+
+        }
         /*/ POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
