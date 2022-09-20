@@ -41,13 +41,13 @@ axios.interceptors.response.use(response => {
         iconColor: 'red',
         background: '#f27474',
         customClass: {
-          popup: 'colored-toast'
+            popup: 'colored-toast'
         },
 
         showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true
-      })
+    })
 
     const { data, status } = error.response!;
     switch (status) {
@@ -64,21 +64,21 @@ axios.interceptors.response.use(response => {
             //toast.error(data.title);
             Toast.fire({
                 icon: 'error',
-                title:'400 -Bad request'
+                title: '400 -Bad request'
             })
             break;
         case 401:
             //toast.error((data.title) || ('401 - Unauthorised'));
             Toast.fire({
                 icon: 'error',
-                title:'401 - Unauthorized'
+                title: '401 - Unauthorized'
             })
             break;
         case 500:
             //toast.error(data.title);
             Toast.fire({
                 icon: 'error',
-                title:'500 - Internal server error'
+                title: '500 - Internal server error'
             })
             break;
         default:
@@ -120,11 +120,18 @@ const Account = {
     currentUser: () => requests.get('account/currentUser'),
 }
 
+const Orders = {
+    list: () => requests.get('order'),
+    fetch: (id: number) => requests.get(`order/${id}`),
+    create: (values: any) => requests.post('order', values)
+}
+
 const agent = {
     Catalog,
     TestErrors,
     Basket,
-    Account
+    Account,
+    Orders
 }
 
 export default agent;
