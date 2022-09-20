@@ -7,6 +7,9 @@ using API.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
+
 
 namespace API.Controllers
 {
@@ -20,6 +23,21 @@ namespace API.Controllers
         {
             _context = context;
 
+        }
+
+
+                // GET: api/Baskets/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Basket>> GetBasket(int id)
+        {
+            var basket = await _context.Baskets.FindAsync(id);
+
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            return basket;
         }
 
         [HttpGet(Name = "GetBasket")]
@@ -54,6 +72,36 @@ namespace API.Controllers
         }
 
         
+                // PUT: api/Baskets/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBasket(int id, Basket basket)
+        {
+            if (id != basket.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(basket).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BasketExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
 
 
         [HttpDelete]
@@ -107,6 +155,11 @@ namespace API.Controllers
             var basket = new Basket { CostumerId = customerId };
             _context.Baskets.Add(basket);
             return basket;
+        }
+
+                private bool BasketExists(int id)
+        {
+            return _context.Baskets.Any(e => e.Id == id);
         }
     }
 }
