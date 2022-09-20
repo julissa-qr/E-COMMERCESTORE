@@ -4,11 +4,13 @@ import agent from "../../api/agent";
 import LoadingComponent from "../../layout/LoadingComponents";
 import { Order } from "../../models/order";
 import { currencyFormat } from "../../util/util";
+import OrderDetailed from "./OrderDetailed";
 
 export default function Orders() {
 
     const [orders, setOrders] = useState<Order[] | null>(null);
     const [loading, setLoading] = useState(true);
+    const [selectedOrderNumber, setSelectedOrderNumber] = useState(0);
 
     useEffect(() => {
         agent.Orders.list()
@@ -18,6 +20,14 @@ export default function Orders() {
     }, [])
 
     if (loading) return <LoadingComponent message="Loading orders..." />
+
+    if (selectedOrderNumber > 0) return (
+        <OrderDetailed
+            order={orders?.find(o => o.id === selectedOrderNumber)!}
+            setSelectedOrder={setSelectedOrderNumber}
+        />
+    )
+
 
     return (
         <TableContainer component={Paper}>
@@ -44,7 +54,7 @@ export default function Orders() {
                             <TableCell align="right">{order.orderDate.split('T')[0]}</TableCell>
                             <TableCell align="right">{order.orderStatus}</TableCell>
                             <TableCell align="right">
-                                <Button>View</Button>
+                                <Button onClick={() => setSelectedOrderNumber(order.id)} >View</Button>
                             </TableCell>
                         </TableRow>
                     ))}

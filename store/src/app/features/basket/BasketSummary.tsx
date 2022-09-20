@@ -2,11 +2,16 @@ import { TableContainer, Paper, Table, TableBody, TableRow, TableCell, Typograph
 import { useStoreContext } from "../../context/StoreContext";
 import { currencyFormat } from "../../util/util";
 
-export default function BasketSummary() {
+interface Props {
+    subtotal?: number;
+}
+
+export default function BasketSummary({subtotal}: Props) {
     const {basket} = useStoreContext();
     // ?? significa que lo que se retiene es null
     //condicional en basket para checar, asegurar que tenemos basket
-    const subtotal = basket?.items.reduce((sum,item) => sum + (item.quantity * item.price), 0) ??  0;
+    if(subtotal === undefined)
+         subtotal = basket?.items.reduce((sum,item) => sum + (item.quantity * item.price), 0) ??  0;
     const deliveryFee = subtotal > 20000 ? 0 : 500;
 
     return (
