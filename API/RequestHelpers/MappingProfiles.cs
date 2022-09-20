@@ -10,6 +10,7 @@ namespace API.RequestHelpers
         {
             //agregamos los perfiles que queremos hacer auto map
             CreateMap<CreateProductDto, Product>();
+            CreateMap<UpdateProductDto, Product>();
         }
     }
 }
