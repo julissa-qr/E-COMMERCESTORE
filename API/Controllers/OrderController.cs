@@ -86,6 +86,33 @@ namespace API.Controllers
             };
             //se agrega la orden
             _context.Orders.Add(order);
+            //Se envia el correo
+            string emailText = System.IO.File.ReadAllText(@"Controllers\email1.txt");
+            string emailText2 = System.IO.File.ReadAllText(@"Controllers\email2.txt");
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com");
+            var mail = new MailMessage();
+            mail.From = new MailAddress("casestudytest@hotmail.com");
+            mail.To.Add("casestudytest@hotmail.com");
+            mail.Subject = "Order Created";
+            mail.IsBodyHtml = true;
+            string htmlBody;
+            htmlBody = emailText + order.ToString() + emailText2;
+            mail.Body = htmlBody;
+            smtpClient.Port = 587;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new System.Net.NetworkCredential("casestudytest@hotmail.com", "Testcasestudy24");
+            smtpClient.EnableSsl = true;
+            Object state = mail;
+
+            //event handler for asynchronous call
+            try
+            {
+                smtpClient.SendAsync(mail, state);
+            }
+            catch (Exception ex)
+            {
+
+            }
             _context.Baskets.Remove(basket);
 
             //checar si el usuario ha guardado la direccion
