@@ -7,7 +7,8 @@ import App from './app/layout/App';
 import './app/layout/styles.css'
 import { store } from './app/store/configureStore';
 import reportWebVitals from './reportWebVitals';
-
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

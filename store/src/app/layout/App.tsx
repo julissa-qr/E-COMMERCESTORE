@@ -1,6 +1,6 @@
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AboutUs from "../features/about/AboutUs";
 import Catalog from "../features/catalog/Catalog";
@@ -21,6 +21,8 @@ import Register from "../features/account/Register";
 import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
 import PrivateRoute from "./PrivateRoute";
+import Orders from "../features/orders/Orders";
+import PrivateRouteOrder from "./PrivateRouteOrder";
 
 function App() {
   
@@ -83,7 +85,11 @@ function App() {
           <Route element={<PrivateRoute />} >
           <Route path="/checkout" element={<CheckoutPage />} />
           </Route>
-          
+      
+          <Route element={<PrivateRouteOrder />} >
+          <Route path="/orders" element={<Orders />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
