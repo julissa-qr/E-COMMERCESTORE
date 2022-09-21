@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import LoadingComponent from "../../layout/LoadingComponents";
-import { Product } from "../../models/product"
-import ProductList from "./ProductList";
+import { Product } from "../models/product";
+import { useAppSelector } from "../store/configureStore";
 
-export default function Catalog() {
-
-    
-
+export default function useProducts()
+{
     const [products, setProducts] = useState<Product[]>([]);
+    //const {productsLoaded, brands, types} = useAppSelector(state => state)
     const[loading, setLoading]  = useState(true);
 
     useEffect(() => {
@@ -20,11 +18,7 @@ export default function Catalog() {
         
     }, [])
 
-    if (loading) return <LoadingComponent message='Loading products...' />
-
-    return (
-        <>
-            <ProductList products={products} />
-        </>
-    )
+    return{
+        products
+    }
 }

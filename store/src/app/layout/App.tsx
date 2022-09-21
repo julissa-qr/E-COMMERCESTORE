@@ -23,6 +23,8 @@ import { useAppDispatch } from "../store/configureStore";
 import PrivateRoute from "./PrivateRoute";
 import Orders from "../features/orders/Orders";
 import PrivateRouteOrder from "./PrivateRouteOrder";
+import Inventory from "../features/admin/Inventory";
+import PrivateRouteInventory from "./PrivateRouteInventory";
 
 function App() {
   
@@ -88,6 +90,10 @@ function App() {
       
           <Route element={<PrivateRouteOrder />} >
           <Route path="/orders" element={<Orders />} />
+          </Route>
+
+          <Route element={<PrivateRouteInventory />} >
+          <Route path="/inventory" element={<Inventory />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -29,15 +29,17 @@ namespace API.Controllers
         public async Task<ActionResult<List<Product>>> GetProducts(string orderBy)
         {
             var query = _context.Products.AsQueryable();
-            
-            query = orderBy switch{
+
+            query = orderBy switch
+            {
                 "price" => query.OrderBy(p => p.Price),
                 "priceDesc" => query.OrderByDescending(p => p.Price),
                 _ => query.OrderBy(p => p.Name)
             };
-                return await query.ToListAsync();
+            return await query.ToListAsync();
         }
 
+       
         //GET A SPECIFIC PRODUCT
         [HttpGet("{id}", Name = "GetProduct")] //api/products/3
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -46,6 +48,16 @@ namespace API.Controllers
             if (product == null) return NotFound();
             return product;
         }
+
+        [HttpGet("filters")]
+        public async Task<IActionResult> GetFilters()
+        {
+            var brands = await _context.Products.Select(p => p.Brand).Distinct().ToListAsync();
+            var types = await _context.Products.Select(p => p.Type).Distinct().ToListAsync();
+
+            return Ok(new {brands, types});
+        }
+
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -57,26 +69,43 @@ namespace API.Controllers
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if(result) return CreatedAtRoute("GetProduct", new {Id = product.Id}, product);
-            return BadRequest(new ProblemDetails {Title= "Problem creating new product"});
+            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+            return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
 
         }
-        
+
         [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult> UpdateProduct(UpdateProductDto productDto)
         {
             var product = await _context.Products.FindAsync(productDto.Id);
 
-            if(product == null) return NotFound();
+            if (product == null) return NotFound();
 
             _mapper.Map(productDto, product);
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if(result) return NoContent();
+            if (result) return NoContent();
 
-            return BadRequest(new ProblemDetails {Title= "Problem updating the product"});
+            return BadRequest(new ProblemDetails { Title = "Problem updating the product" });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null) return NotFound();
+
+            _context.Products.Remove(product);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem deleting the product" });
         }
     }
 }
