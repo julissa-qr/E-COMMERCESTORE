@@ -1,5 +1,5 @@
 import { Typography, Grid, Paper, Box, Button } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import AppTextInput from "../../api/components/AppTextInput";
 import { Product } from "../../models/product";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function ProductForm({ product, cancelEdit }: Props) {
-
+    
     const { control, reset, handleSubmit, formState: { isSubmitting } } = useForm({
         resolver: yupResolver(validationSchema)
     });
@@ -42,7 +42,6 @@ export default function ProductForm({ product, cancelEdit }: Props) {
         }
     }
 
-
     return (
         <Box component={Paper} sx={{ p: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
@@ -51,7 +50,7 @@ export default function ProductForm({ product, cancelEdit }: Props) {
             <form onSubmit={handleSubmit(handleSubmitData)}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
-                        <AppTextInput control={control} name='name' label='Product name' />
+                        <AppTextInput  control={control} name='name' label='Product name' />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <AppTextInput control={control} name='brand' label='Brand' />

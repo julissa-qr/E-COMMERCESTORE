@@ -7,7 +7,6 @@ interface Props extends UseControllerProps {
     multiline?: boolean;
     rows?: number;
     type?: string;
-
 }
 
 

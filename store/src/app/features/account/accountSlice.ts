@@ -2,16 +2,19 @@ import { createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { FieldValues } from "react-hook-form";
 import Swal from "sweetalert2";
+import { string } from "yup/lib/locale";
 import agent from "../../api/agent";
 import { User } from "../../models/user";
 import { setBasket } from "../basket/basketSlice";
 
 interface AccountState {
     user: User | null;
+   
 }
 
 const initialState: AccountState = {
     user: null
+    
 }
 
 export const signInUser = createAsyncThunk<User, FieldValues>(
