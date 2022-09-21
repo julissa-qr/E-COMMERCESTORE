@@ -26,18 +26,22 @@ namespace API.Controllers
         }
         //GET ALL PRODUCTS
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts(string orderBy)
+        public async Task<ActionResult<List<Product>>> GetProducts(string orderBy, string brands, string types)
         {
-            var query = _context.Products.AsQueryable();
+            var query = _context.Products
+                .AsQueryable();
 
-            query = orderBy switch
+           query = orderBy switch
             {
                 "price" => query.OrderBy(p => p.Price),
                 "priceDesc" => query.OrderByDescending(p => p.Price),
                 _ => query.OrderBy(p => p.Name)
             };
+
+
             return await query.ToListAsync();
         }
+
 
        
         //GET A SPECIFIC PRODUCT
@@ -61,7 +65,7 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
+        public async Task<ActionResult<Product>> CreateProduct([FromForm]CreateProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
 
@@ -76,7 +80,7 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task<ActionResult> UpdateProduct(UpdateProductDto productDto)
+        public async Task<ActionResult> UpdateProduct([FromForm]UpdateProductDto productDto)
         {
             var product = await _context.Products.FindAsync(productDto.Id);
 

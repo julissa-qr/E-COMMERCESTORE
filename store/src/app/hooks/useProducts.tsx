@@ -7,6 +7,7 @@ export default function useProducts()
     const [products, setProducts] = useState<Product[]>([]);
     //const {productsLoaded, brands, types} = useAppSelector(state => state)
     const[loading, setLoading]  = useState(true);
+    //const dispatch = useAppSelector();
 
     useEffect(() => {
         //agent.Catalog.list().then(products => setProducts(products))
@@ -17,6 +18,7 @@ export default function useProducts()
             .finally(() => setLoading(false))
         
     }, [])
+
 
     return{
         products

@@ -68,9 +68,9 @@ export default function ProductForm({ product, cancelEdit }: Props) {
                     <Grid item xs={12}>
                         <AppTextInput multiline={true} rows={4} control={control} name='description' label='Description' />
                     </Grid>
-                    {/*<Grid item xs={12}>
+                    <Grid item xs={12}>
                         <AppTextInput control={control} name='pictureUrl' label='Image' />
-    </Grid>*/}
+                    </Grid>
                 </Grid>
                 <Box display='flex' justifyContent='space-between' sx={{ mt: 3 }}>
                     <Button onClick={cancelEdit} variant='contained' color='inherit'>Cancel</Button>
