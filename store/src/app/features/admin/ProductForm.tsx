@@ -21,6 +21,7 @@ export default function ProductForm({ product, cancelEdit }: Props) {
     const { control, reset, handleSubmit, formState: { isSubmitting } } = useForm({
         resolver: yupResolver(validationSchema)
     });
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
