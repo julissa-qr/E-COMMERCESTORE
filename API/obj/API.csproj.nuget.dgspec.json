@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\API\\API.csproj": {}
+    "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\api\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\API\\API.csproj": {
+    "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\API\\API.csproj",
+        "projectPath": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\api\\API.csproj",
         "packagesPath": "C:\\Users\\Jose Luis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\API\\obj\\",
+        "outputPath": "C:\\Users\\Jose Luis\\Desktop\\E-COMMERCESTORE\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -57,6 +57,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
