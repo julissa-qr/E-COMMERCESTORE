@@ -11,7 +11,6 @@ interface Props {
     product: Product;
 }
 
-
 export default function ProductCard({ product }: Props) {
 
     const [loading, setLoading] = useState(false);
