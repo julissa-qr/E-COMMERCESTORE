@@ -3,8 +3,12 @@ import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import AppTextInput from "../../api/components/AppTextInput";
 import { Product } from "../../models/product";
-import {yupResolver} from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./productValidation";
+import agent from "../../api/agent";
+import { useAppDispatch } from "../../store/configureStore";
+import { setProduct } from "../catalog/catalogSlice";
+import { LoadingButton } from "@mui/lab";
 
 
 interface Props {
@@ -12,18 +16,30 @@ interface Props {
     cancelEdit: () => void;
 }
 
-export default function ProductForm({product, cancelEdit}: Props) {
-   
-    const { control, reset, handleSubmit } = useForm({
+export default function ProductForm({ product, cancelEdit }: Props) {
+
+    const { control, reset, handleSubmit, formState: { isSubmitting } } = useForm({
         resolver: yupResolver(validationSchema)
     });
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if(product) reset(product);
-    },[product,reset])
+        if (product) reset(product);
+    }, [product, reset])
 
-    function handleSubmitData(data: FieldValues){
-        console.log(data);
+    async function handleSubmitData(data: FieldValues) {
+        try {
+            let response: Product;
+            if (product) {
+                response = await agent.Admin.updateProduct(data);
+            } else {
+                response = await agent.Admin.createProduct(data);
+            }
+            dispatch(setProduct(response));
+            cancelEdit();
+        } catch (error: any) {
+            console.log(error);
+        }
     }
 
 
@@ -52,13 +68,13 @@ export default function ProductForm({product, cancelEdit}: Props) {
                     <Grid item xs={12}>
                         <AppTextInput multiline={true} rows={4} control={control} name='description' label='Description' />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/*<Grid item xs={12}>
                         <AppTextInput control={control} name='pictureUrl' label='Image' />
-                    </Grid>
+    </Grid>*/}
                 </Grid>
                 <Box display='flex' justifyContent='space-between' sx={{ mt: 3 }}>
                     <Button onClick={cancelEdit} variant='contained' color='inherit'>Cancel</Button>
-                    <Button type="submit" variant='contained' color='success'>Submit</Button>
+                    <LoadingButton type="submit" variant='contained' color='success'>Submit</LoadingButton>
                 </Box>
             </form>
         </Box>

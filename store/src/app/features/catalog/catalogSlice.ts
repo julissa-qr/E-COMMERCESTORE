@@ -49,7 +49,11 @@ export const catalogSlice = createSlice({
         brands: [],
         types: []
     }),
-    reducers: {},
+    reducers: {
+        setProduct: (state, action) => {
+            productsAdapter.upsertOne(state, action.payload);
+        }
+    },
     extraReducers: (builder => {
         builder.addCase(fetchProductsAsync.pending, (state) => {
             state.status = 'pendingFetchProducts';
@@ -90,3 +94,4 @@ export const catalogSlice = createSlice({
 })
 
 //export const productSelectors = productsAdapter.getSelectors((state: RootState) => state.catalog);
+export const {setProduct} = catalogSlice.actions;
