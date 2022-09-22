@@ -68,3 +68,6 @@ C:\julissa\JStore\API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\julissa\JStore\API\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\julissa\JStore\API\bin\Debug\net6.0\AutoMapper.dll
 C:\julissa\JStore\API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\julissa\JStore\API\bin\Debug\net6.0\MailKit.dll
+C:\julissa\JStore\API\bin\Debug\net6.0\MimeKit.dll
+C:\julissa\JStore\API\bin\Debug\net6.0\BouncyCastle.Crypto.dll
