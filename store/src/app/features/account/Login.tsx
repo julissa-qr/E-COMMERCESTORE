@@ -5,12 +5,14 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Paper } from '@mui/material';
+import { Button, Icon, IconButton, Paper } from '@mui/material';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../store/configureStore';
 import { signInUser } from './accountSlice';
+import { useState } from 'react';
+import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 
 
 export default function Login() {
@@ -23,6 +25,8 @@ export default function Login() {
     mode: 'all'
   })
 
+  const [showPwd, setShowPw ] = useState(false);
+
   async function submitForm(data: FieldValues) {
     try {
       await dispatch(signInUser(data));
@@ -33,9 +37,9 @@ export default function Login() {
   }
 
   return (
-    
+
     <Container component={Paper} maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-      <Outlet/>
+      <Outlet />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
       </Avatar>
@@ -53,16 +57,19 @@ export default function Login() {
           required
           helperText={!errors.username?.message ? ' ' : `${errors.username.message}`}
         />
-        <TextField
-          margin="normal"
-          fullWidth
-          label="Password"
-          type="password"
-          {...register('password', { required: 'Password is required' })}
-          error={!!errors.password}
-          required
-          helperText={!errors.password?.message ? ' ' : `${errors.password.message}`}
-        />
+       
+          <TextField 
+            margin="normal"
+            fullWidth
+            label="Password"
+            type="password"
+            {...register('password', { required: 'Password is required' })}
+            error={!!errors.password}
+            required
+            helperText={!errors.password?.message ? ' ' : `${errors.password.message}`}
+          
+          />
+        
         <LoadingButton
           loading={isSubmitting}
           disabled={!isValid}

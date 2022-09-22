@@ -5,20 +5,40 @@ import useProducts from "../../hooks/useProducts";
 import { useState } from "react";
 import ProductForm from "./ProductForm";
 import { Product } from "../../models/product";
+import agent from "../../api/agent";
+import { useAppDispatch } from "../../store/configureStore";
+import { removeProduct } from "../catalog/catalogSlice";
+import { LoadingButton } from "@mui/lab";
 
 export default function Inventory() {
     const {products} = useProducts();
     const [editMode, setEditMode] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
+    const [loading, setLoading] = useState(false);
+    const [target, setTarget] = useState(0);
+    const dispatch = useAppDispatch();
 
     function handleSelectProduct(product: Product){
         setSelectedProduct(product);
         setEditMode(true);
     }
 
+    function handleDeleteProduct(id: number){
+        setLoading(true);
+        setTarget(id);
+        agent.Admin.deleteProduct(id)
+            .then(() => dispatch(removeProduct(id)))
+            .catch(error => console.log(error)) 
+            .finally(() => setLoading(false));
+    }
+
     function cancelEdit() {
         if(selectedProduct) setSelectedProduct(undefined);
         setEditMode(false);
+    }
+
+    function refreshPage(){
+        window.location.reload();
     }
 
     if(editMode) return <ProductForm product={selectedProduct} cancelEdit={cancelEdit}/>
@@ -63,7 +83,16 @@ export default function Inventory() {
                                 <TableCell align="center">{product.quantityInStock}</TableCell>
                                 <TableCell align="right">
                                     <Button onClick={()=> handleSelectProduct(product)} startIcon={<Edit />} />
-                                    <Button startIcon={<Delete />} color='error' />
+                                    <LoadingButton
+                                        loading={loading && target === product.id}
+                                        startIcon={<Delete />} 
+                                        onClick={() =>
+                                            handleDeleteProduct(product.id)
+                                        }
+                                        color='error'
+                                        
+                                    />
+                                    
                                 </TableCell>
                             </TableRow>
                         ))}
