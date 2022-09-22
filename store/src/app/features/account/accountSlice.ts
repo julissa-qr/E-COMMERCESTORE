@@ -9,12 +9,13 @@ import { setBasket } from "../basket/basketSlice";
 
 interface AccountState {
     user: User | null;
-   
+    roles: string[]
 }
 
 const initialState: AccountState = {
-    user: null
-    
+    user: null,
+    roles: []
+
 }
 
 export const signInUser = createAsyncThunk<User, FieldValues>(
@@ -65,7 +66,9 @@ export const accountSlice = createSlice({
             localStorage.removeItem('user');
         },
         setUser: (state, action) => {
-            state.user = action.payload;
+            let claims = JSON.parse(atob(action.payload.token.split('.')[1])); //forma de tener el JWT o el contenido en OBJETOS JSON 
+            let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            state.user = { ...action.payload, roles: typeof (roles) === 'string' ? [roles] : roles }
         }
     },
     extraReducers: (builder => {
@@ -84,7 +87,9 @@ export const accountSlice = createSlice({
         })
 
         builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
-            state.user = action.payload;
+            let claims = JSON.parse(atob(action.payload.token.split('.')[1])); //forma de tener el JWT o el contenido en OBJETOS JSON 
+            let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            state.user = { ...action.payload, roles: typeof (roles) === 'string' ? [roles] : roles }
         });
         builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
             console.log(action.payload);

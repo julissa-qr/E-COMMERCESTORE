@@ -84,7 +84,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route element={<PrivateRoute />} >
+          <Route element={<PrivateRoute  />} >
           <Route path="/checkout" element={<CheckoutPage />} />
           </Route>
       
@@ -92,7 +92,7 @@ function App() {
           <Route path="/orders" element={<Orders />} />
           </Route>
 
-          <Route element={<PrivateRouteInventory />} >
+          <Route element={<PrivateRouteInventory  />} >
           <Route path="/inventory" element={<Inventory />} />
           </Route>
 

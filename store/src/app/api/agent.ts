@@ -74,6 +74,12 @@ axios.interceptors.response.use(response => {
                 title: '401 - Unauthorized'
             })
             break;
+        case 403:
+            Toast.fire({
+                icon: 'error',
+                title: '403 - Forbidden - You are not allowed to do that'
+            })
+            break;
         case 500:
             //toast.error(data.title);
             Toast.fire({
